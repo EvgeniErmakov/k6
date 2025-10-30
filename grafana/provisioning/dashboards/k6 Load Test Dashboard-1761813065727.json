@@ -3,7 +3,9 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "uid": "-- Grafana --"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -13,31 +15,38 @@
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
+  "id": 1,
   "links": [],
   "panels": [
     {
-      "datasource": "Elasticsearch",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "P31C819B24CF3C3C7"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
-            "drawStyle": "line",
+            "barWidthFactor": 0.6,
+            "drawStyle": "bars",
             "fillOpacity": 10,
             "gradientMode": "none",
             "hideFrom": {
+              "legend": false,
               "tooltip": false,
-              "viz": false,
-              "legend": false
+              "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -45,7 +54,15 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": true
+            "showValues": false,
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -53,7 +70,120 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 7,
+        "x": 0,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "Time",
+              "id": "2",
+              "settings": {
+                "interval": "1s"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P31C819B24CF3C3C7"
+          },
+          "metrics": [
+            {
+              "field": "Value",
+              "id": "1",
+              "type": "sum"
+            }
+          ],
+          "query": "MetricName:vus",
+          "refId": "A",
+          "timeField": "Time"
+        }
+      ],
+      "title": "Active Virtual Users (VUs)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "P31C819B24CF3C3C7"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
               }
             ]
           }
@@ -61,9 +191,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
+        "h": 11,
+        "w": 5,
+        "x": 7,
         "y": 0
       },
       "id": 2,
@@ -71,13 +201,16 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
         }
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "12.2.1",
       "targets": [
         {
           "alias": "Requests per Second",
@@ -91,6 +224,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P31C819B24CF3C3C7"
+          },
           "metrics": [
             {
               "field": "MetricName",
@@ -112,295 +249,224 @@
       "type": "timeseries"
     },
     {
-      "datasource": "Elasticsearch",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "ms"
-        },
-        "overrides": []
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "P31C819B24CF3C3C7"
       },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 0
-      },
-      "id": 3,
-      "options": {
-        "legend": {
-          "calcs": ["mean", "max"],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi"
-        }
-      },
-      "pluginVersion": "8.0.0",
-      "targets": [
-        {
-          "alias": "Average Duration",
-          "bucketAggs": [
-            {
-              "field": "Time",
-              "id": "2",
-              "settings": {
-                "interval": "auto"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "metrics": [
-            {
-              "field": "Value",
-              "id": "1",
-              "meta": {
-                "type": "count"
-              },
-              "settings": {
-                "replace": false
-              },
-              "type": "avg"
-            }
-          ],
-          "query": "MetricName:http_req_duration",
-          "refId": "A"
-        }
-      ],
-      "title": "Average Response Time",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "Elasticsearch",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
+          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
-                "value": 10
+                "value": 80
               }
             ]
-          },
-          "unit": "short"
+          }
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 0,
-        "y": 8
-      },
-      "id": 4,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.0.0",
-      "targets": [
-        {
-          "alias": "Failed Requests",
-          "bucketAggs": [
-            {
-              "field": "Time",
-              "id": "2",
-              "settings": {
-                "interval": "auto"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "metrics": [
-            {
-              "field": "MetricName",
-              "id": "1",
-              "meta": {
-                "type": "count"
-              },
-              "settings": {
-                "replace": false
-              },
-              "type": "count"
-            }
-          ],
-          "query": "MetricName:http_req_failed",
-          "refId": "A"
-        }
-      ],
-      "title": "Failed Requests",
-      "type": "stat"
-    },
-    {
-      "datasource": "Elasticsearch",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "tooltip": false,
-              "viz": false,
-              "legend": false
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tags.status.keyword"
             },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
+            "properties": [
               {
-                "color": "green",
-                "value": null
+                "id": "displayName",
+                "value": "status"
               }
             ]
           },
-          "unit": "short"
-        },
-        "overrides": []
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tags.method"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "method"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tags.name"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "url"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tags.name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 354
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Min"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
-        "h": 8,
-        "w": 16,
-        "x": 8,
-        "y": 8
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 0
       },
-      "id": 5,
+      "id": 22,
       "options": {
-        "legend": {
-          "calcs": ["mean"],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi"
-        }
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "status"
+          }
+        ]
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "12.2.1",
       "targets": [
         {
-          "alias": "Virtual Users",
+          "alias": "",
           "bucketAggs": [
             {
-              "field": "Time",
+              "field": "Tags.name",
               "id": "2",
               "settings": {
-                "interval": "auto"
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "1000"
               },
-              "type": "date_histogram"
+              "type": "terms"
+            },
+            {
+              "field": "Tags.method",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "1000"
+              },
+              "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P31C819B24CF3C3C7"
+          },
           "metrics": [
             {
               "field": "Value",
               "id": "1",
-              "meta": {
-                "type": "count"
-              },
-              "settings": {
-                "replace": false
-              },
+              "type": "min"
+            },
+            {
+              "field": "Value",
+              "id": "4",
               "type": "max"
+            },
+            {
+              "field": "Value",
+              "id": "5",
+              "type": "avg"
+            },
+            {
+              "field": "Value",
+              "id": "6",
+              "settings": {
+                "percents": [
+                  "90"
+                ]
+              },
+              "type": "percentiles"
+            },
+            {
+              "field": "Value",
+              "id": "7",
+              "settings": {
+                "percents": [
+                  "95"
+                ]
+              },
+              "type": "percentiles"
             }
           ],
-          "query": "MetricName:vus",
-          "refId": "A"
+          "query": "MetricName: http_req_duration AND Tags.method:GET AND NOT Tags.status:(502 OR 403 OR 500 OR 400 OR 0 OR 302 OR 504) AND NOT Tags.name:/callback/",
+          "refId": "A",
+          "timeField": "Time"
         }
       ],
-      "title": "Active Virtual Users (VUs)",
-      "type": "timeseries"
+      "title": "URLs [GET]",
+      "type": "table"
     },
     {
-      "datasource": "Elasticsearch",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "P31C819B24CF3C3C7"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "bars",
             "fillOpacity": 100,
             "gradientMode": "opacity",
             "hideFrom": {
+              "legend": false,
               "tooltip": false,
-              "viz": false,
-              "legend": false
+              "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -408,9 +474,14 @@
               "type": "linear"
             },
             "showPoints": "never",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
+              "group": "A",
               "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
             }
           },
           "mappings": [],
@@ -418,7 +489,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -462,23 +534,29 @@
         ]
       },
       "gridPos": {
-        "h": 8,
+        "h": 10,
         "w": 12,
         "x": 0,
-        "y": 16
+        "y": 11
       },
       "id": 7,
       "options": {
         "legend": {
-          "calcs": ["mean", "sum"],
+          "calcs": [
+            "mean",
+            "sum"
+          ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
         }
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "12.2.1",
       "targets": [
         {
           "alias": "Errors",
@@ -492,6 +570,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P31C819B24CF3C3C7"
+          },
           "metrics": [
             {
               "field": "MetricName",
@@ -514,6 +596,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P31C819B24CF3C3C7"
+          },
           "metrics": [
             {
               "field": "MetricName",
@@ -529,7 +615,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "Elasticsearch",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "P31C819B24CF3C3C7"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -539,14 +628,164 @@
             "align": "auto",
             "cellOptions": {
               "type": "auto"
-            }
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tags.method.keyword"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "method"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tags.status.keyword"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "status"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 11
+      },
+      "id": 25,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "status"
+          }
+        ]
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "Tags.name",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "1000"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P31C819B24CF3C3C7"
+          },
+          "metrics": [
+            {
+              "field": "Value",
+              "id": "1",
+              "type": "min"
+            },
+            {
+              "field": "Value",
+              "id": "3",
+              "type": "max"
+            },
+            {
+              "field": "Value",
+              "id": "4",
+              "type": "avg"
+            },
+            {
+              "field": "Value",
+              "id": "5",
+              "settings": {
+                "percents": [
+                  "90"
+                ]
+              },
+              "type": "percentiles"
+            },
+            {
+              "field": "Value",
+              "id": "6",
+              "settings": {
+                "percents": [
+                  "95"
+                ]
+              },
+              "type": "percentiles"
+            }
+          ],
+          "query": "MetricName: http_req_duration AND Tags.method:POST AND NOT Tags.status:(502 OR 403 OR 500 OR 400 OR 0 OR 302 OR 504) AND NOT Tags.name:/callback/",
+          "refId": "A",
+          "timeField": "Time"
+        }
+      ],
+      "title": "URLs [POST]",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "P31C819B24CF3C3C7"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -595,13 +834,14 @@
         ]
       },
       "gridPos": {
-        "h": 12,
+        "h": 5,
         "w": 12,
-        "x": 12,
-        "y": 16
+        "x": 0,
+        "y": 21
       },
       "id": 23,
       "options": {
+        "cellHeight": "sm",
         "showHeader": true,
         "sortBy": [
           {
@@ -610,47 +850,43 @@
           }
         ]
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "12.2.1",
       "targets": [
         {
-          "alias": "latency",
+          "alias": "",
           "bucketAggs": [
             {
-              "field": "Tags.name.keyword",
+              "field": "Tags.name",
               "id": "2",
               "settings": {
+                "min_doc_count": "1",
                 "order": "desc",
                 "orderBy": "_term",
-                "size": "20000"
+                "size": "1000"
               },
               "type": "terms"
             },
             {
-              "field": "Tags.method.keyword",
-              "id": "7",
-              "settings": {
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "20000"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "Tags.status.keyword",
+              "field": "Tags.method",
               "id": "8",
               "settings": {
+                "min_doc_count": "1",
                 "order": "desc",
                 "orderBy": "_term",
-                "size": "20000"
+                "size": "1000"
               },
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P31C819B24CF3C3C7"
+          },
           "metrics": [
             {
               "field": "Value",
               "id": "1",
-              "type": "min"
+              "type": "max"
             },
             {
               "field": "Value",
@@ -666,316 +902,35 @@
               "field": "Value",
               "id": "5",
               "settings": {
-                "percents": ["90"]
+                "percents": [
+                  "90"
+                ]
               },
               "type": "percentiles"
             },
             {
               "field": "Value",
-              "id": "6",
+              "id": "7",
               "settings": {
-                "percents": ["95"]
+                "percents": [
+                  "95"
+                ]
               },
               "type": "percentiles"
             }
           ],
-          "query": "MetricName:http_req_duration AND NOT Tags.status:(301 OR 302 OR 303 OR 200) AND NOT Tags.name:/callback/",
-          "refId": "A"
+          "query": "MetricName: http_req_duration AND NOT Tags.status:(301 OR 302 OR 303 OR 200) AND NOT Tags.name:/callback/",
+          "refId": "A",
+          "timeField": "Time"
         }
       ],
       "title": "Failed URLs and latency",
       "type": "table"
-    },
-    {
-      "datasource": "Elasticsearch",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Tags.status.keyword"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "status"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Tags.method.keyword"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "method"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Tags.name.keyword"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "url"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 12,
-        "w": 12,
-        "x": 0,
-        "y": 28
-      },
-      "id": 22,
-      "options": {
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": false,
-            "displayName": "status"
-          }
-        ]
-      },
-      "pluginVersion": "8.0.0",
-      "targets": [
-        {
-          "alias": "latency",
-          "bucketAggs": [
-            {
-              "field": "Tags.name.keyword",
-              "id": "2",
-              "settings": {
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "20000"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "Tags.method.keyword",
-              "id": "7",
-              "settings": {
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "20000"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "Tags.status.keyword",
-              "id": "8",
-              "settings": {
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "20000"
-              },
-              "type": "terms"
-            }
-          ],
-          "metrics": [
-            {
-              "field": "Value",
-              "id": "1",
-              "type": "min"
-            },
-            {
-              "field": "Value",
-              "id": "3",
-              "type": "max"
-            },
-            {
-              "field": "Value",
-              "id": "4",
-              "type": "avg"
-            },
-            {
-              "field": "Value",
-              "id": "5",
-              "settings": {
-                "percents": ["90"]
-              },
-              "type": "percentiles"
-            },
-            {
-              "field": "Value",
-              "id": "6",
-              "settings": {
-                "percents": ["95"]
-              },
-              "type": "percentiles"
-            }
-          ],
-          "query": "MetricName:http_req_duration AND Tags.method:GET AND NOT Tags.status:(502 OR 403 OR 500 OR 400 OR 0 OR 302 OR 504) AND NOT Tags.name:/callback/",
-          "refId": "A"
-        }
-      ],
-      "title": "URLs and latency for GET - min, max, avg, p90 and p95",
-      "type": "table"
-    },
-    {
-      "datasource": "Elasticsearch",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Tags.method.keyword"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "method"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Tags.status.keyword"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "status"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 12,
-        "w": 12,
-        "x": 12,
-        "y": 28
-      },
-      "id": 25,
-      "options": {
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": false,
-            "displayName": "status"
-          }
-        ]
-      },
-      "pluginVersion": "8.0.0",
-      "targets": [
-        {
-          "alias": "latency",
-          "bucketAggs": [
-            {
-              "field": "Tags.method.keyword",
-              "id": "2",
-              "settings": {
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "20000"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "Tags.status.keyword",
-              "id": "7",
-              "settings": {
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "20000"
-              },
-              "type": "terms"
-            }
-          ],
-          "metrics": [
-            {
-              "field": "Value",
-              "id": "1",
-              "type": "min"
-            },
-            {
-              "field": "Value",
-              "id": "3",
-              "type": "max"
-            },
-            {
-              "field": "Value",
-              "id": "4",
-              "type": "avg"
-            },
-            {
-              "field": "Value",
-              "id": "6",
-              "settings": {
-                "percents": ["95"]
-              },
-              "type": "percentiles"
-            }
-          ],
-          "query": "MetricName:http_req_duration AND NOT Tags.status:(502 OR 403 OR 500 OR 400 OR 0 OR 504) AND NOT Tags.name:/callback/",
-          "refId": "A"
-        }
-      ],
-      "title": "URLs and latency - min, max, avg and 95p",
-      "type": "table"
     }
   ],
+  "preload": false,
   "refresh": "10s",
-  "schemaVersion": 27,
-  "style": "dark",
+  "schemaVersion": 42,
   "tags": [
     "k6",
     "performance",
@@ -992,6 +947,5 @@
   "timezone": "",
   "title": "k6 Load Test Dashboard",
   "uid": "k6-dashboard",
-  "version": 0
+  "version": 5
 }
-
