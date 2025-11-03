@@ -1,6 +1,6 @@
 import test_me_all_endpoints_200 from "./test_me_all_endpoints_200.js";
 
-//  Команда запуска./k6 run tests/test_me_all_endpoints_200/test_me_all_endpoints_200-1.js -o output-elasticsearch
+// Команда запуска ./k6 run tests/test_me_all_endpoints_200/test_me_all_endpoints_200-1.js -o output-elasticsearch
 export const options = {
     scenarios: {
         testMeAllEndpoints200: {

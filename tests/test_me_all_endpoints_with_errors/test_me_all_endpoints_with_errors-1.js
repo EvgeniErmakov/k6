@@ -1,5 +1,6 @@
 import test_me_all_endpoints_with_errors from "./test_me_all_endpoints_with_errors.js";
 
+// Команда запуска ./k6 run tests/test_me_all_endpoints_with_errors/test_me_all_endpoints_with_errors-1.js -o output-elasticsearch
 export const options = {
     scenarios: {
         testMeAllEndpointsWithErrors: {
