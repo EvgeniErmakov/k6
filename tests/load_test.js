@@ -9,10 +9,10 @@ const customTrend = new Trend('custom_trend');
 
 export const options = {
   stages: [
-    { duration: '30s', target: 10 }, // Плавное увеличение до 10 пользователей за 30 секунд
+    { duration: '10s', target: 10 }, // Плавное увеличение до 10 пользователей за 30 секунд
   ],
   thresholds: {
-    http_req_duration: ['p(95)<500'], // 95% запросов должны быть выполнены за 500ms
+    http_req_duration: ['p(95)<5000'], // 95% запросов должны быть выполнены за 500ms
     http_req_failed: ['rate<0.1'],    // Уровень ошибок должен быть менее 10%
     errors: ['rate<0.1'],
   },

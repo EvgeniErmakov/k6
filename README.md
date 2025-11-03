@@ -146,6 +146,9 @@ docker-compose up -d elasticsearch
 # Установите URL Elasticsearch
 export K6_ELASTICSEARCH_URL=http://localhost:9200
 
+# Задать URL тестируемого сервиса
+export LOAD_HOST='localhost:8080'
+
 # Запустите тест
 ./k6 run tests/load_test.js -o output-elasticsearch
 ```
