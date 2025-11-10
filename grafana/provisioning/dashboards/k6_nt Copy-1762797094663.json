@@ -17,7 +17,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 1,
+  "id": 0,
   "links": [],
   "panels": [
     {
@@ -88,9 +88,10 @@
       "options": {
         "legend": {
           "calcs": [
-            "mean"
+            "mean",
+            "max"
           ],
-          "displayMode": "list",
+          "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
@@ -188,7 +189,32 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "Requests per Second"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": true,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 11,
@@ -199,8 +225,11 @@
       "id": 2,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
+          "calcs": [
+            "min",
+            "max"
+          ],
+          "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
@@ -219,7 +248,7 @@
               "field": "Time",
               "id": "2",
               "settings": {
-                "interval": "auto"
+                "interval": "1s"
               },
               "type": "date_histogram"
             }
@@ -230,23 +259,258 @@
           },
           "metrics": [
             {
-              "field": "MetricName",
+              "field": "Value",
               "id": "1",
-              "meta": {
-                "type": "count"
-              },
-              "settings": {
-                "replace": false
-              },
-              "type": "count"
+              "type": "sum"
             }
           ],
           "query": "MetricName:http_reqs",
-          "refId": "A"
+          "refId": "A",
+          "timeField": "Time"
         }
       ],
       "title": "Requests per Second (RPS)",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "P31C819B24CF3C3C7"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tags.status.keyword"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "status"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Min"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              },
+              {
+                "id": "custom.width",
+                "value": 181
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Max"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Average"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "p90.0 Value"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              },
+              {
+                "id": "displayName",
+                "value": "P90"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "p95.0 Value"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              },
+              {
+                "id": "displayName",
+                "value": "P95"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tags.name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 267
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tags.method"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "method"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 25,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "Tags.name"
+          }
+        ]
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "Tags.name",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "1000"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "Tags.method",
+              "id": "7",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "1000"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P31C819B24CF3C3C7"
+          },
+          "metrics": [
+            {
+              "field": "Value",
+              "id": "1",
+              "type": "min"
+            },
+            {
+              "field": "Value",
+              "id": "3",
+              "type": "max"
+            },
+            {
+              "field": "Value",
+              "id": "4",
+              "type": "avg"
+            },
+            {
+              "field": "Value",
+              "id": "5",
+              "settings": {
+                "percents": [
+                  "90"
+                ]
+              },
+              "type": "percentiles"
+            },
+            {
+              "field": "Value",
+              "id": "6",
+              "settings": {
+                "percents": [
+                  "95"
+                ]
+              },
+              "type": "percentiles"
+            }
+          ],
+          "query": "MetricName: http_req_duration AND Tags.method:POST AND NOT Tags.status:(502 OR 403 OR 500 OR 400 OR 0 OR 302 OR 504) AND NOT Tags.name:/callback/",
+          "refId": "A",
+          "timeField": "Time"
+        }
+      ],
+      "title": "[POST] URLs Success",
+      "type": "table"
     },
     {
       "datasource": {
@@ -386,7 +650,7 @@
         "h": 11,
         "w": 12,
         "x": 12,
-        "y": 0
+        "y": 10
       },
       "id": 22,
       "options": {
@@ -701,246 +965,6 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Min"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "ms"
-              },
-              {
-                "id": "custom.width",
-                "value": 181
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Max"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "ms"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Average"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "ms"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "p90.0 Value"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "ms"
-              },
-              {
-                "id": "displayName",
-                "value": "P90"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "p95.0 Value"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "ms"
-              },
-              {
-                "id": "displayName",
-                "value": "P95"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Tags.name"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 267
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Tags.method"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "method"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 12,
-        "y": 11
-      },
-      "id": 25,
-      "options": {
-        "cellHeight": "sm",
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": false,
-            "displayName": "Tags.name"
-          }
-        ]
-      },
-      "pluginVersion": "12.2.1",
-      "targets": [
-        {
-          "alias": "",
-          "bucketAggs": [
-            {
-              "field": "Tags.name",
-              "id": "2",
-              "settings": {
-                "min_doc_count": "1",
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "1000"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "Tags.method",
-              "id": "7",
-              "settings": {
-                "min_doc_count": "1",
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "1000"
-              },
-              "type": "terms"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "P31C819B24CF3C3C7"
-          },
-          "metrics": [
-            {
-              "field": "Value",
-              "id": "1",
-              "type": "min"
-            },
-            {
-              "field": "Value",
-              "id": "3",
-              "type": "max"
-            },
-            {
-              "field": "Value",
-              "id": "4",
-              "type": "avg"
-            },
-            {
-              "field": "Value",
-              "id": "5",
-              "settings": {
-                "percents": [
-                  "90"
-                ]
-              },
-              "type": "percentiles"
-            },
-            {
-              "field": "Value",
-              "id": "6",
-              "settings": {
-                "percents": [
-                  "95"
-                ]
-              },
-              "type": "percentiles"
-            }
-          ],
-          "query": "MetricName: http_req_duration AND Tags.method:POST AND NOT Tags.status:(502 OR 403 OR 500 OR 400 OR 0 OR 302 OR 504) AND NOT Tags.name:/callback/",
-          "refId": "A",
-          "timeField": "Time"
-        }
-      ],
-      "title": "[POST] URLs Success",
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "elasticsearch",
-        "uid": "P31C819B24CF3C3C7"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "footer": {
-              "reducers": []
-            },
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Tags.status.keyword"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "status"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
               "options": "Tags.method.keyword"
             },
             "properties": [
@@ -1141,26 +1165,240 @@
       ],
       "title": "Failed URLs and latency",
       "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "P31C819B24CF3C3C7"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tags.method"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "method"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tags.status"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "status"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Min"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Max"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Average"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "p90.0 Value"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "P90"
+              },
+              {
+                "id": "unit",
+                "value": "ms"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "p95.0 Value"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "P95"
+              },
+              {
+                "id": "unit",
+                "value": "ms"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 21
+      },
+      "id": 26,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "Tags.method",
+              "id": "2",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "1000"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "Tags.status",
+              "id": "7",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "1000"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P31C819B24CF3C3C7"
+          },
+          "metrics": [
+            {
+              "field": "Value",
+              "id": "1",
+              "type": "min"
+            },
+            {
+              "field": "Value",
+              "id": "3",
+              "type": "max"
+            },
+            {
+              "field": "Value",
+              "id": "4",
+              "type": "avg"
+            },
+            {
+              "field": "Value",
+              "id": "5",
+              "settings": {
+                "percents": [
+                  "90"
+                ]
+              },
+              "type": "percentiles"
+            },
+            {
+              "field": "Value",
+              "id": "6",
+              "settings": {
+                "percents": [
+                  "95"
+                ]
+              },
+              "type": "percentiles"
+            }
+          ],
+          "query": "MetricName:http_req_duration AND NOT Tags.status:(502 OR 403 OR 500 OR 400 OR 0 OR 504) AND NOT Tags.name:/callback/",
+          "refId": "A",
+          "timeField": "Time"
+        }
+      ],
+      "title": "URLs and latency",
+      "type": "table"
     }
   ],
   "preload": false,
   "refresh": "10s",
   "schemaVersion": 42,
-  "tags": [
-    "k6",
-    "performance",
-    "load-testing"
-  ],
+  "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-15m",
-    "to": "now"
+    "from": "2025-11-03T13:02:08.622Z",
+    "to": "2025-11-03T13:06:34.480Z"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "k6 Load Test Dashboard",
-  "uid": "k6-dashboard",
-  "version": 8
+  "title": "k6_nt Copy",
+  "uid": "ad66d5d",
+  "version": 3
 }
