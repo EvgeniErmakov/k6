@@ -7,7 +7,7 @@ import test_me_all_endpoints_200 from "./test_me_all_endpoints_200.js";
 export const options = {
     scenarios: {
         testMeAllEndpoints200: {
-            executor: 'ramping-vus',
+            executor: 'ramping-vus', // https://grafana.com/docs/k6/latest/using-k6/scenarios/executors/
             startVUs: 1,
             stages: [
                 {duration: "1m", target: 15},
@@ -18,7 +18,7 @@ export const options = {
     },
     thresholds: {
         'http_req_duration': [`p(95) < 5000`], // 95% of requests must complete below 5s
-        'checks': ['rate > 0.95']
+        'checks': ['rate > 0.95'] // how to use thresholds https://grafana.com/docs/k6/next/using-k6/thresholds/
     }
 };
 
