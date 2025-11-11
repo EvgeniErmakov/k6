@@ -1,6 +1,9 @@
 import test_me_all_endpoints_200 from "./test_me_all_endpoints_200.js";
 
-// Команда запуска ./k6 run tests/test_me_all_endpoints_200/test_me_all_endpoints_200-1.js -o output-elasticsearch
+// Для запуска:
+// export LOAD_HOST='localhost:8080'
+// export K6_ELASTICSEARCH_URL=http://localhost:9200
+// ./k6 run tests/test_me_all_endpoints_200/test_me_all_endpoints_200-1.js -o output-elasticsearch
 export const options = {
     scenarios: {
         testMeAllEndpoints200: {
