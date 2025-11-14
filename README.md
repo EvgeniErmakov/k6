@@ -108,6 +108,10 @@ chmod +x scripts/build_k6.sh
 ### Импорт дашборда
 Обязательно импортируйте json из ./grafana/provisioning/dashboards/k6_nt Copy-1762797094663.json в вашу grafana через ей ui. 
 
+### Запуск тестируемого приложения
+В рамках примеров в данном репозитории, тестировалось java-приложение https://github.com/EvgeniErmakov/k6-test-me.
+Для запуска скриптов, например test_me_all_endpoints_200-1.js, нужно запустить k6-test-me.
+
 ### Запуск теста
 
 **Важно**: Перед запуском теста убедитесь, что Elasticsearch запущен:
@@ -125,7 +129,7 @@ export K6_ELASTICSEARCH_URL=http://localhost:9200
 export LOAD_HOST='localhost:8080'
 
 # Запустите тест
-./k6 run tests/load_test.js -o output-elasticsearch
+./k6 run tests/test_me_all_endpoints_200/test_me_all_endpoints_200-1.js -o output-elasticsearch
 ```
 
 ## Volumes
